@@ -147,6 +147,7 @@ namespace vitmod
 				Hold.OnPickup = OnPickup;
 				Hold.OnRelease = OnRelease;
 				Hold.SpeedGetter = (() => hitSpeed);
+				Hold.SpeedSetter = (speed) => hitSpeed = speed;
 				Add(new TransitionListener
 				{
 					OnOut = (f) => needsNewHome = true

@@ -57,6 +57,7 @@ namespace vitmod
             Hold.OnHitSpring = new Func<Spring, bool>(HitSpring);
             Hold.OnHitSpinner = new Action<Entity>(HitSpinner);
             Hold.SpeedGetter = () => Speed;
+            Hold.SpeedSetter = (speed) => Speed = speed;
             onCollideH = new Collision(OnCollideH);
             onCollideV = new Collision(OnCollideV);
             LiftSpeedGraceTime = 0.1f;
