@@ -187,6 +187,12 @@ namespace vitmod {
                     UpdateTriggers(player);
                 }
             }
+
+            if (resetActivation)
+            {
+                externalActivation = false;
+                resetActivation = false;
+            }
         }
 
         public void UpdateConditions(Player player) {
@@ -337,11 +343,6 @@ namespace vitmod {
             }
             if (externalActivation) {
                 result = true;
-                if (resetActivation)
-                {
-                    externalActivation = false;
-                    resetActivation = false;
-                }
             }
             if (invertCondition) {
                 result = !result;
