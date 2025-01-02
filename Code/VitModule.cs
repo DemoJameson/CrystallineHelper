@@ -621,6 +621,7 @@ namespace vitmod
             TimeCrystal.stopTimer = 0f;
             TimeCrystal.stopStage = 0;
             timeStopScaleTimer = 0f;
+            useTimeStopDelta = false;
             CoyoteBounceTrigger.CoyoteTriggerInside = null;
             orig(self);
         }

@@ -29,6 +29,8 @@ coyoteBounceTrigger.placements = {
             refillDirections = "MatchCoyote",
             dashTypes = "Rebound",
             setGrounded = false,
+            refillDashes = true,
+            refillStamina = true,
         }
     }
 }

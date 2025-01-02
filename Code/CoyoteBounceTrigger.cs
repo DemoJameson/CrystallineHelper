@@ -77,8 +77,14 @@ namespace vitmod {
 
 			if (CoyoteBounceTrigger.MatchDirection(direction, bouncer.refill))
 			{
-				player.RefillDash();
-				player.RefillStamina();
+                if (bouncer.dashes)
+                {
+                    player.RefillDash();
+                }
+                if (bouncer.stamina)
+                {
+                    player.RefillStamina();
+                }
 			}
 		}
 
@@ -93,6 +99,8 @@ namespace vitmod {
 		public float time;
         public BounceDirections refill;
         public bool setGrounded;
+        public bool dashes;
+        public bool stamina;
 
         public static CoyoteBounceTrigger CoyoteTriggerInside;
         public static bool GroundedOverride;
@@ -107,6 +115,8 @@ namespace vitmod {
                 refill = data.Enum("refillDirections", BounceDirections.Top);
             }
             setGrounded = data.Bool("setGrounded", false);
+            dashes = data.Bool("refillDashes", true);
+            stamina = data.Bool("refillStamina", true);
         }
 
         public override void OnEnter(Player player) {
