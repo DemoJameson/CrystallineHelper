@@ -597,14 +597,18 @@ namespace vitmod
         private void Level_Reload(On.Celeste.Level.orig_Reload orig, Level self)
         {
             orig(self);
-            CustomWindController customWind = self.Entities.FindFirst<CustomWindController>();
-            if (customWind != null)
+            if (!self.Completed)
             {
-                customWind.SnapWind();
-            }
-            else
-            {
-                self.Wind = Vector2.Zero;
+                CustomWindController customWind = self.Entities.FindFirst<CustomWindController>();
+                WindController vanillaWind = self.Entities.FindFirst<WindController>();
+                if (customWind != null)
+                {
+                    customWind.SnapWind();
+                }
+                else if (vanillaWind == null)
+                {
+                    self.Wind = Vector2.Zero;
+                }
             }
         }
 

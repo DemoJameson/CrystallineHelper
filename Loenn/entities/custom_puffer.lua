@@ -23,6 +23,7 @@ customPuffer.placements = {
             boostMode = "SetSpeed",
             legacyBoost = false,
             absoluteVector = false,
+            renderEye = true,
         }
     },
     {
@@ -46,6 +47,7 @@ customPuffer.placements = {
             boostMode = "SetSpeed",
             legacyBoost = false,
             absoluteVector = false,
+            renderEye = true,
         }
     }
 }

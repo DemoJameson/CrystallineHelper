@@ -3,6 +3,7 @@ using Celeste.Mod.Entities;
 using FMOD;
 using Microsoft.Xna.Framework;
 using Monocle;
+using MonoMod.Cil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,12 +17,14 @@ namespace vitmod {
             On.Celeste.Level.LoadLevel += Level_LoadLevel;
             On.Celeste.Player.Jump += Player_Jump;
             On.Celeste.PlayerCollider.Check += PlayerCollider_Check;
+            IL.Monocle.Engine.Update += Engine_Update;
         }
 
         public static void Unload() {
             On.Celeste.Level.LoadLevel -= Level_LoadLevel;
             On.Celeste.Player.Jump -= Player_Jump;
             On.Celeste.PlayerCollider.Check -= PlayerCollider_Check;
+            IL.Monocle.Engine.Update -= Engine_Update;
         }
 
         private static readonly HashSet<Entity> collidedEntities = new();
@@ -67,7 +70,9 @@ namespace vitmod {
                         break;
                 }
             }
+            excludeTalkers = data.Bool("excludeTalkers", false);
             ifSafe = data.Bool("onlyIfSafe", false);
+            includeCoyote = data.Bool("includeCoyote", false);
             playerState = data.Int("playerState", 0);
             if (string.IsNullOrEmpty(data.Attr("entityType", ""))) {
                 collideType = data.Attr("entityTypeToCollide", "Celeste.Strawberry");
@@ -320,6 +325,8 @@ namespace vitmod {
                     result = player.OnGround();
                     if (ifSafe)
                         result &= player.OnSafeGround;
+                    if (includeCoyote)
+                        result |= player.jumpGraceTimer > 0f;
                     break;
                 case ActivationTypes.OnPlayerState:
                     result = player.StateMachine.State == playerState;
@@ -330,6 +337,11 @@ namespace vitmod {
             }
             if (externalActivation) {
                 result = true;
+                if (resetActivation)
+                {
+                    externalActivation = false;
+                    resetActivation = false;
+                }
             }
             if (invertCondition) {
                 result = !result;
@@ -462,6 +474,10 @@ namespace vitmod {
                 case InputTypes.Dash:
                     return (held ? Input.Dash.Check : Input.Dash.Pressed);
                 case InputTypes.Interact:
+                    if (excludeTalkers && TalkComponent.PlayerOver != null)
+                    {
+                        return false;
+                    }
                     return (held ? Input.Talk.Check : Input.Talk.Pressed);
                 case InputTypes.CrouchDash:
                     return (held ? Input.CrouchDash.Check : Input.CrouchDash.Pressed);
@@ -532,6 +548,31 @@ namespace vitmod {
             return result;
         }
 
+        private static void Engine_Update(MonoMod.Cil.ILContext il)
+        {
+            // code taken from communal helper's AbstractInputController
+            // https://github.com/CommunalHelper/CommunalHelper/blob/dev/src/Entities/Misc/AbstractInputController.cs
+
+            ILCursor cursor = new(il);
+            if (cursor.TryGotoNext(instr => instr.MatchLdsfld<Engine>("FreezeTimer"),
+                instr => instr.MatchCall<Engine>("get_RawDeltaTime")))
+            {
+                cursor.EmitDelegate<Action>(UpdateFreezeInput);
+            }
+        }
+
+        public static void UpdateFreezeInput()
+        {
+            foreach (TriggerTrigger trigger in Engine.Scene.Tracker.GetEntities<TriggerTrigger>())
+            {
+                if (trigger.activationType == ActivationTypes.OnInput && !trigger.inputHeld && trigger.CheckInput(trigger.inputType, false))
+                {
+                    trigger.externalActivation = true;
+                    trigger.resetActivation = true;
+                }
+            }
+        }
+
         public bool Global;
         public bool Activated;
 
@@ -548,12 +589,15 @@ namespace vitmod {
         private Session.CoreModes coreMode;
         private InputTypes inputType;
         private bool inputHeld;
+        private bool excludeTalkers;
         private bool ifSafe;
+        private bool includeCoyote;
         private int playerState;
         private TalkComponent talker;
         private List<Entity> entitiesInside;
         private string collideSolid;
         public bool externalActivation;
+        public bool resetActivation;
         private bool invertCondition;
         private ComparisonTypes comparisonType;
         private bool absoluteValue;
