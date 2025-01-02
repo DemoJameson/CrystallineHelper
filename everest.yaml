@@ -1,5 +1,5 @@
 - Name: CrystallineHelper
-  Version: 1.16.3
+  Version: 1.16.4
   DLL: Code/bin/vitmod.dll
   Dependencies:
     - Name: EverestCore

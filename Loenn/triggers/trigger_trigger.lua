@@ -91,8 +91,10 @@ function triggerTrigger.ignoredFields(entity)
         "entityType",
         "inputType",
         "holdInput",
+        "excludeTalkers",
         "onlyIfSafe",
         "playerState",
+        "includeCoyote"
     }
 
     local function doNotIgnore(value)
@@ -137,8 +139,12 @@ function triggerTrigger.ignoredFields(entity)
     elseif atype == "OnInput" then
         doNotIgnore("inputType")
         doNotIgnore("holdInput")
+        if entity.inputType == "Interact" then
+            doNotIgnore("excludeTalkers")
+        end
     elseif atype == "OnGrounded" then
         doNotIgnore("onlyIfSafe")
+        doNotIgnore("includeCoyote")
     elseif atype == "OnPlayerState" then
         doNotIgnore("playerState")
     end
@@ -180,8 +186,10 @@ for _, mode in pairs(activationTypes) do
             entityType = "",
             inputType = "Grab",
             holdInput = false,
+            excludeTalkers = false,
             onlyIfSafe = false,
             playerState = 0,
+            includeCoyote = false,
         }
     }
     table.insert(triggerTrigger.placements, placement)

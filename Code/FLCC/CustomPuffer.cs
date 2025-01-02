@@ -78,6 +78,7 @@ namespace vitmod
         private bool legacyBoost = true;
         private bool absoluteVector = false;
         private bool launchState = true;
+        private bool renderEye = true;
 
 		public CustomPuffer(Vector2 position, bool faceRight, float angle = 0f, float radius = 32f, float launchSpeed = 280f, string spriteName = "pufferFish")
 			: base(position)
@@ -136,6 +137,7 @@ namespace vitmod
             legacyBoost = data.Bool("legacyBoost", true);
             absoluteVector = data.Bool("absoluteVector", false);
             launchState = data.Bool("setLaunchState", true);
+            renderEye = data.Bool("renderEye", true);
 
 			if (data.Bool("holdable"))
 			{
@@ -494,7 +496,7 @@ namespace vitmod
 				}
 			}
 			base.Render();
-			if (!isHappy && sprite.CurrentAnimationID == "alerted")
+			if (renderEye && !isHappy && sprite.CurrentAnimationID == "alerted")
 			{
 				Vector2 vector3 = Position + new Vector2(3f, (Facing.X < 0f) ? (-5) : (-4)) * sprite.Scale;
 				Vector2 to = lastPlayerPos + new Vector2(0f, -4f);
@@ -733,7 +735,7 @@ namespace vitmod
 			{
 				return;
 			}
-			if (Hold != null && Input.Grab.Check && !player.Ducking && !player.IsTired)
+			if (Hold != null && Input.Grab.Check && !player.Ducking && !player.IsTired && (player.Holding == null))
 				return;
 			if (cannotHitTimer <= 0f)
 			{
