@@ -1,5 +1,6 @@
 ﻿using Celeste;
 using Celeste.Mod;
+using Celeste.Mod.Core;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -121,7 +122,7 @@ namespace vitmod {
                         float s = Ease.ExpoInOut(currentCodeArrowsAnim[i]) * 0.75f, r = 0;
                         if (i < codePosition) {
 
-                            c = Settings.Instance.DisableFlashes ? correctA : Color.Lerp(correctA, correctB, Calc.SineMap(Scene.RawTimeActive * 20f - i / 2f, 0f, 1f));
+                            c = CoreModule.Settings.AllowTextHighlight ? Color.Lerp(correctA, correctB, Calc.SineMap(Scene.RawTimeActive * 20f - i / 2f, 0f, 1f)) : correctA;
                         }
                         if (i + 1 == codePosition) {
                             s += wiggler.Value * 0.25f;

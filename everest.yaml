@@ -3,7 +3,7 @@
   DLL: Code/bin/vitmod.dll
   Dependencies:
     - Name: EverestCore
-      Version: 1.4607.0
+      Version: 1.5184.0
   OptionalDependencies:
     - Name: FrostHelper
       Version: 1.21.2
