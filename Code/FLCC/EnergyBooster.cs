@@ -136,6 +136,8 @@ namespace vitmod
 			player.Speed = newSpeed;
 			if (!oneUse) {
 				outline.Visible = true;
+			} else {
+				Remove(light);
 			}
 			wiggler.Start();
 			//PlayerReleased(player);
