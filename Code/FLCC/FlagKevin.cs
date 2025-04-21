@@ -28,11 +28,12 @@ namespace vitmod
             }
         }
 
-        public static ParticleType P_Impact => CrushBlock.P_Impact;
-        public static ParticleType P_Crushing => CrushBlock.P_Impact;
-        public static ParticleType P_Activate => CrushBlock.P_Impact;
+        private readonly bool useVanillaParticles;
+        public ParticleType P_Impact => CrushBlock.P_Impact;
+        public ParticleType P_Crushing => useVanillaParticles ? CrushBlock.P_Crushing : CrushBlock.P_Impact;
+        public ParticleType P_Activate => useVanillaParticles ? CrushBlock.P_Activate : CrushBlock.P_Impact;
 
-        private Color fill = Calc.HexToColor("62222b");
+        private Color fill;
         private Level level;
         private bool canActivate;
         private Vector2 crushDir;
@@ -80,8 +81,9 @@ namespace vitmod
 
         public FlagKevin(Vector2 position, float width, float height, Axes axes, MoveBlock.Directions _flagDirection,
             string _flag, bool _inverted = false, bool chillOut = false, float _lavaSpeed = 1, string customPath = null,
-            bool _playerHit = true, bool _repeat = false, bool _setFlagOnHit = false,
-            float _crushSpeed = 240f, float _returnSpeed = 60f, float _crushAccel = 500f, float _returnAccel = 160f)
+            Color? fillColor = null, bool _playerHit = true, bool _repeat = false, bool _setFlagOnHit = false,
+            bool _useVanillaParticles = false, float _crushSpeed = 240f, float _returnSpeed = 60f, float _crushAccel = 500f,
+            float _returnAccel = 160f)
             : base(position, width, height, safe: false)
         {
             flag = _flag;
@@ -91,6 +93,8 @@ namespace vitmod
             playerHit = _playerHit;
             repeat = _repeat;
             setFlagOnHit = _setFlagOnHit;
+            useVanillaParticles = _useVanillaParticles;
+            fill = fillColor ?? Calc.HexToColor("62222b");
 
             _CrushSpeed = _crushSpeed;
             _ReturnSpeed = _returnSpeed;
@@ -199,10 +203,11 @@ namespace vitmod
             data.Position + offset, data.Width, data.Height, data.Enum("axes", Axes.Both),
             data.Enum("flagDirection", MoveBlock.Directions.Right), data.Attr("flag"),
             data.Bool("inverted"), data.Bool("chillout"), data.Float("lavaSpeed", 1f),
-            data.Attr("customPath", "crushblock"), data.Bool("playerCanHit", true),
-            data.Bool("repeatWhileFlag"), data.Bool("setFlagOnHit", false),
-            data.Float("crushSpeed", 240f), data.Float("returnSpeed", 60f),
-            data.Float("crushAccel", 500f), data.Float("returnAccel", 160f))
+            data.Attr("customPath", "crushblock"), data.HexColor("fillColor", Calc.HexToColor("62222b")),
+            data.Bool("playerCanHit", true), data.Bool("repeatWhileFlag"), data.Bool("setFlagOnHit", false),
+            data.Bool("useVanillaParticles", false), data.Float("crushSpeed", 240f),
+            data.Float("returnSpeed", 60f), data.Float("crushAccel", 500f),
+            data.Float("returnAccel", 160f))
         { }
 
         public override void Added(Scene scene)

@@ -1,6 +1,7 @@
 local drawableNinePatch = require("structs.drawable_nine_patch")
 local drawableRectangle = require("structs.drawable_rectangle")
 local drawableSprite = require("structs.drawable_sprite")
+local utils = require("utils")
 
 local kevin = {}
 
@@ -18,6 +19,7 @@ kevin.placements = {
             flagDirection = "Right",
             flag = "",
             customPath = "crushblock",
+            fillColor = "62222b",
             inverted = false,
             chillout = false,
             lavaSpeed = 1,
@@ -28,6 +30,7 @@ kevin.placements = {
             playerCanHit = true,
             repeatWhileFlag = false,
             setFlagOnHit = false,
+            useVanillaParticles = false,
         }
     },
     {
@@ -39,6 +42,7 @@ kevin.placements = {
             flagDirection = "Right",
             flag = "",
             customPath = "crushblock",
+            fillColor = "62222b",
             inverted = false,
             chillout = false,
             lavaSpeed = 0.5,
@@ -49,6 +53,7 @@ kevin.placements = {
             playerCanHit = true,
             repeatWhileFlag = false,
             setFlagOnHit = false,
+            useVanillaParticles = false,
         }
     },
 }
@@ -70,13 +75,16 @@ kevin.fieldInformation = {
         options = moveDirections,
         editable = false,
     },
+    fillColor = {
+        fieldType = "color"
+    }
 }
 
 local frameTextures = {
-    none = "objects/crushblock/block00",
-    horizontal = "objects/crushblock/block01",
-    vertical = "objects/crushblock/block02",
-    both = "objects/crushblock/block03"
+    none = "/block00",
+    horizontal = "/block01",
+    vertical = "/block02",
+    both = "/block03"
 }
 
 local ninePatchOptions = {
@@ -84,9 +92,10 @@ local ninePatchOptions = {
     borderMode = "repeat"
 }
 
-local kevinColor = {98 / 255, 34 / 255, 43 / 255}
-local smallFaceTexture = "objects/crushblock/idle_face"
-local giantFaceTexture = "objects/crushblock/giant_block00"
+local defaultPath = "objects/crushblock"
+local defaultColor = {98 / 255, 34 / 255, 43 / 255}
+local smallFaceTexture = "/idle_face"
+local giantFaceTexture = "/giant_block00"
 
 function kevin.sprite(room, entity)
     local x, y = entity.x or 0, entity.y or 0
@@ -95,10 +104,13 @@ function kevin.sprite(room, entity)
     local axes = entity.axes or "both"
     local chillout = entity.chillout
 
-    local giant = height >= 48 and width >= 48 and chillout
-    local faceTexture = giant and giantFaceTexture or smallFaceTexture
+    local path = (entity.customPath ~= nil and entity.customPath ~= "") and ("objects/" .. entity.customPath) or defaultPath
+    local kevinColor = utils.getColor(entity.fillColor or defaultColor)
 
-    local frameTexture = frameTextures[axes] or frameTextures["both"]
+    local giant = height >= 48 and width >= 48 and chillout
+    local faceTexture = path .. (giant and giantFaceTexture or smallFaceTexture)
+
+    local frameTexture = path .. (frameTextures[axes] or frameTextures["both"])
     local ninePatch = drawableNinePatch.fromTexture(frameTexture, ninePatchOptions, x, y, width, height)
 
     local rectangle = drawableRectangle.fromRectangle("fill", x + 2, y + 2, width - 4, height - 4, kevinColor)

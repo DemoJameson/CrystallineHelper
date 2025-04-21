@@ -275,6 +275,7 @@ entities.vitellary/interactivechaser.attributes.description.sendToPlayer=If true
 
 # Flag Kevin
 entities.vitellary/flagkevin.attributes.description.customPath=Path to the kevin sprite to use. Relative to Atlases/Gameplay/objects.
+entities.vitellary/flagkevin.attributes.description.fillColor=Fill color for the kevin.
 entities.vitellary/flagkevin.attributes.description.flagDirection=Direction to move when the flag is triggered.
 entities.vitellary/flagkevin.attributes.description.flag=Flag that should trigger the kevin.
 entities.vitellary/flagkevin.attributes.description.inverted=If true, the kevin is triggered when the flag becomes false rather than true.
@@ -284,6 +285,7 @@ entities.vitellary/flagkevin.attributes.description.axes=Determines which sides 
 entities.vitellary/flagkevin.attributes.description.playerCanHit=Whether the player can hit the Kevin's sides.
 entities.vitellary/flagkevin.attributes.description.repeatWhileFlag=If true, the kevin will repeatedly move in the flag direction every time it returns to its initial spot while the flag is true.
 entities.vitellary/flagkevin.attributes.description.setFlagOnHit=If true, the flag will be set to true when the player hits the Kevin.
+entities.vitellary/flagkevin.attributes.description.useVanillaParticles=If true, the kevin will use vanilla activate/crush/impact particles instead of only impact particles.
 entities.vitellary/flagkevin.attributes.description.crushSpeed=The speed at which the Kevin will move when attacking.
 entities.vitellary/flagkevin.attributes.description.returnSpeed=The speed at which the Kevin will move when returning.
 
