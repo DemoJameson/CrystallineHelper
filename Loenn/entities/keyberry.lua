@@ -15,6 +15,7 @@ keyberry.placements = {
         data = {
             winged = false,
             collectTime = 0.15,
+            persistent = true,
         }
     },
     {
@@ -22,6 +23,7 @@ keyberry.placements = {
         data = {
             winged = true,
             collectTime = 0.15,
+            persistent = true,
         }
     }
 }
