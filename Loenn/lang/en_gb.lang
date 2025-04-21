@@ -153,6 +153,7 @@ entities.vitellary/forcejumpcrystal.attributes.description.holdJump=Whether the 
 # Keyberry
 entities.vitellary/keyberry.attributes.description.winged=The keyberry attempts to vertically rise offscreen when the player dashes.
 entities.vitellary/keyberry.attributes.description.collectTime=How long the player needs to be grounded in order for the berry to be collected.
+entities.vitellary/keyberry.attributes.description.persistent=Whether the keyberry and the door it unlocks should disappear permanently, or not (re-appearing when the room is re-entered).
 
 # Keyberry With Return
 entities.vitellary/returnkeyberry.attributes.description.winged=The keyberry attempts to vertically rise offscreen when the player dashes.

@@ -26,6 +26,7 @@ namespace vitmod
             returnHomeWhenLost = true;
             ID = gid;
             winged = data.Bool("winged", false);
+            persistent = data.Bool("persistent", true);
             hasReturnBubble = data.Name == "vitellary/returnkeyberry";
             start = Position;
             Depth = -100;
@@ -320,7 +321,7 @@ namespace vitmod
                         {
                             LockBlock door = solid as LockBlock;
                             used = true;
-                            door.Add(new Coroutine(KeyBerryOpenDoor(door)));
+                            door.Add(new Coroutine(KeyBerryOpenDoor(door, persistent)));
                         }
                     }
                     foreach (IntroLockedCar car in Scene.Tracker.GetEntities<IntroLockedCar>())
@@ -331,7 +332,7 @@ namespace vitmod
                             car.Add(new Coroutine(car.KeyberryUnlock()));
                         }
                     }
-                    if (used)
+                    if (used && persistent)
                     {
                         SceneAs<Level>().Session.DoNotLoad.Add(ID);
                         VitModule.Session.keyberriesToReset.Add(ID);
@@ -341,7 +342,7 @@ namespace vitmod
             }
         }
 
-        private static IEnumerator KeyBerryOpenDoor(LockBlock door)
+        private static IEnumerator KeyBerryOpenDoor(LockBlock door, bool persistent)
         {
             SoundEmitter emitter = SoundEmitter.Play(door.unlockSfxName, door);
             emitter.Source.DisposeOnTransition = true;
@@ -355,8 +356,11 @@ namespace vitmod
                 music.Progress = progress + 1;
                 level.Session.Audio.Apply(false);
             }
-            level.Session.DoNotLoad.Add(door.ID);
-            VitModule.Session.doorsToReset.Add(door.ID);
+            if (persistent)
+            {
+                level.Session.DoNotLoad.Add(door.ID);
+                VitModule.Session.doorsToReset.Add(door.ID);
+            }
             door.Tag |= Tags.TransitionUpdate;
             door.Collidable = false;
             emitter.Source.DisposeOnTransition = false;
@@ -391,10 +395,13 @@ namespace vitmod
             }
             else if (collectIndex == 5)
             {
-                foreach (EntityID entityID in oneUpIDs)
+                if (persistent)
                 {
-                    level.Session.DoNotLoad.Add(entityID);
-                    VitModule.Session.keyberriesToReset.Add(entityID);
+                    foreach (EntityID entityID in oneUpIDs)
+                    {
+                        level.Session.DoNotLoad.Add(entityID);
+                        VitModule.Session.keyberriesToReset.Add(entityID);
+                    }
                 }
                 bool used = false;
                 foreach (Solid solid in Scene.Tracker.GetEntities<Solid>())
@@ -403,10 +410,10 @@ namespace vitmod
                     {
                         used = true;
                         LockBlock door = solid as LockBlock;
-                        door.Add(new Coroutine(KeyBerryOpenDoor(door)));
+                        door.Add(new Coroutine(KeyBerryOpenDoor(door, persistent)));
                     }
                 }
-                if (used)
+                if (used && persistent)
                 {
                     level.Session.DoNotLoad.Add(ID);
                     VitModule.Session.keyberriesToReset.Add(ID);
@@ -426,6 +433,8 @@ namespace vitmod
         }
 
         public bool winged;
+
+        public bool persistent;
 
         private BloomPoint bloom;
 
