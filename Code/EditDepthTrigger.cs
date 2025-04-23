@@ -1,4 +1,5 @@
 ﻿using Celeste;
+using Celeste.Mod;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -28,7 +29,7 @@ namespace vitmod
                 HandleEntity(entity, fillCache: true);
 
                 if (debug && entity.CollideCheck(this)) {
-                    Console.WriteLine(entity.GetType().FullName + ": " + entity.Depth);
+                    Logger.Info("CrystallineHelper/EditDepthTrigger", $"{entity.GetType().FullName}: {entity.Depth}");
                 }
             }
         }
