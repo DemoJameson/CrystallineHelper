@@ -37,8 +37,7 @@ namespace vitmod
             lasers = new List<List<Sprite>>();
 
             Depth = -8499; // below spinners, hopefully above a lot of other things
-
-            Logger.Log("CrystallineHelper", "forcefield init");
+            Tag = Tags.TransitionUpdate;
         }
 
         public override void Added(Scene scene)
