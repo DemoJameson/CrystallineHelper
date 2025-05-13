@@ -1,4 +1,5 @@
 ﻿using Celeste;
+using Celeste.Mod;
 using Celeste.Mod.Entities;
 using Microsoft.Xna.Framework;
 using Monocle;
@@ -223,7 +224,7 @@ namespace vitmod
             active = true;
             if (debug && !string.IsNullOrEmpty(activateType))
             {
-                Console.WriteLine("Custom wind doesn't have a activation case for: " + activateType);
+                Logger.Info("CrystallineHelper/CustomWindController", $"Custom wind doesn't have a activation case for: {activateType}");
             }
             if ((speedX.Count > 1 || speedY.Count > 1) && !alternateSpeed.Contains(0))
             {

@@ -42,7 +42,7 @@ namespace vitmod
 
 		public void Start()
 		{
-			Vector2 value = base.Entity.Position + new Vector2((0 - Facing) * 200, 200f);
+			Vector2 value = base.Entity.Position + new Vector2(-(int)Facing * 200, 200f);
 			for (int i = 0; i < Nodes.Count; i++)
 			{
 				Nodes[i] = value;
