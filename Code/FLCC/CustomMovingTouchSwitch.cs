@@ -5,6 +5,7 @@ using Monocle;
 using MonoMod.Utils;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace vitmod
@@ -14,6 +15,7 @@ namespace vitmod
     public class CustomMovingTouchSwitch : Entity
     {
 		public EntityID ID;
+		private Vector2[] node_set;
 		private Vector2[] nodes;
 		private Color inactiveColor;
 		private Color movingColor;
@@ -24,6 +26,9 @@ namespace vitmod
 		private bool allowDisable;
 		private bool smoke;
 		private bool badelineDeactivate;
+		private bool randomOrder;
+		private int pathLength;
+		private bool revisitPreviousNodes;
 
 		public ISwitch Switch;
 		private Vector2 startPosition;
@@ -44,7 +49,8 @@ namespace vitmod
 		public CustomMovingTouchSwitch(EntityData data, Vector2 offset) : base(data.Position + offset)
 		{
 			ID = new EntityID(data.Level.Name, data.ID);
-			nodes = data.NodesOffset(offset);
+			node_set = data.NodesOffset(offset);
+			nodes = [];
 			var flag = data.Attr("flag");
 			var inverted = data.Bool("inverted");
 			var persistent = data.Bool("persistent");
@@ -57,6 +63,12 @@ namespace vitmod
 			allowDisable = data.Bool("allowDisable");
 			smoke = data.Bool("smoke", true);
 			badelineDeactivate = data.Bool("badelineDeactivate");
+			randomOrder = data.Bool("randomOrder");
+			pathLength = data.Int("pathLength", -1);
+			if (pathLength == -1) {
+				pathLength = node_set.Length;
+			}
+			revisitPreviousNodes = data.Bool("revisitPreviousNodes");
 			var iconName = data.Attr("icon", "vanilla");
 			icon = new Sprite(GFX.Game, iconName == "vanilla" ? "objects/touchswitch/icon" : $"objects/{(iconName is "tall" or "triangle" or "circle" ? "CrystallineHelper/FLCC/" : "")}customMovingTouchSwitch/{iconName}/icon");
 
@@ -255,6 +267,38 @@ namespace vitmod
 					level.Particles.Emit(TouchSwitch.P_FireWhite, currentPosition);
 				}
 				yield return null;
+			}
+		}
+
+		public override void Added(Scene scene) {
+			base.Added(scene);
+			if (randomOrder) {
+				Calc.PushRandom(VitModule.GetSeed(SceneAs<Level>()));
+
+				List<Vector2> path = new List<Vector2>(pathLength);
+
+				List<int> idx_pool = new List<int>(node_set.Length);
+				for (int i = 0; i < node_set.Length; i++) {
+					idx_pool.Add(i);
+				}
+
+				Vector2 prev = startPosition;
+
+				for (int i = 0; i < pathLength; i++) {
+					List<int> idx_candidates = new List<int>(idx_pool);
+					idx_candidates.RemoveAll(idx => node_set[idx] == prev);
+					if (idx_candidates.Count == 0) break;
+					int idx = Calc.Choose<int>(Calc.Random, idx_candidates);
+					if (!revisitPreviousNodes) {
+						idx_pool.Remove(idx);
+					}
+					path.Add(prev = node_set[idx]);
+				}
+
+				nodes = path.ToArray();
+				Calc.PopRandom();
+			} else {
+				nodes = node_set;
 			}
 		}
 
