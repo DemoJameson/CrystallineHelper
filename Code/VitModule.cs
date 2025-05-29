@@ -55,11 +55,11 @@ namespace vitmod
 
         public class VitModuleSettings : EverestModuleSettings
         {
-            public TriggerTrigger.RandomizationTypes TriggerTriggerRandomizationType
+            public RandomizationTypes RandomizationType
             {
                 get;
                 set;
-            } = TriggerTrigger.RandomizationTypes.FileTimer;
+            } = RandomizationTypes.FileTimer;
 
             public bool DisplayDashSequence {
                 get;
@@ -837,6 +837,19 @@ namespace vitmod
             On.Celeste.Level.LoadLevel -= Level_LoadLevel;
             On.Celeste.Level.Reload -= Level_Reload;
         }
+
+        public static int GetSeed(Level level) {
+            if (Settings.RandomizationType == RandomizationTypes.FileTimer) {
+                return (int)(SaveData.Instance.Time % int.MaxValue);
+            } else {
+                return (int)(level.Session.Time % int.MaxValue);
+            }
+        }
+
+        public enum RandomizationTypes {
+            FileTimer,
+            ChapterTimer
+        };
 
         public const string TimeFrozenFlag = "CrystallineHelper_TimeIsFrozen";
 

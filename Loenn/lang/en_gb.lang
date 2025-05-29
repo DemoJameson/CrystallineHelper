@@ -254,6 +254,9 @@ entities.vitellary/customtouchswitch.attributes.description.allowDisable=Whether
 entities.vitellary/customtouchswitch.attributes.description.badelineDeactivate=Whether the touch switch deactivates when touched by an interactive badeline chaser.
 entities.vitellary/customtouchswitch.attributes.description.moveTime=The time it takes for the switch to move between nodes.
 entities.vitellary/customtouchswitch.attributes.description.easing=The easing of the switch's movement between nodes.
+entities.vitellary/customtouchswitch.attributes.description.randomOrder=Should the order the nodes are visited be randomized? Off: Nodes are visited in order. On: `Path Length` of this entity's nodes are visited in a random order.
+entities.vitellary/customtouchswitch.attributes.description.pathLength=When using `Random Order`, the number of nodes that should be visited before finishing. -1 to use the number of attached nodes.
+entities.vitellary/customtouchswitch.attributes.description.revisitPreviousNodes=When using `Random Order`, am I allowed to revisit nodes I have already been to? The sequence may be finished early if there are no nodes left to visit.
 
 # Trigger Beam
 entities.vitellary/triggerbeam.attributes.description.color=The color of the beam.

@@ -20,6 +20,9 @@ customTouchSwitch.placements = {
             smoke = true,
             allowDisable = true,
             badelineDeactivate = false,
+            randomOrder = false,
+            pathLength = -1,
+            revisitPreviousNodes = false,
         }
     }
 }
@@ -35,7 +38,18 @@ customTouchSwitch.fieldInformation = {
     icon = {
         options = {"vanilla", "tall", "triangle", "circle"},
     },
+    pathLength = {
+        fieldType = "integer",
+    },
 }
+
+function customTouchSwitch.ignoredFields(ent)
+    if ent.randomOrder then
+        return {"_name", "_id", "originX", "originY"}
+    else
+        return {"_name", "_id", "originX", "originY", "pathLength", "revisitPreviousNodes"}
+    end
+end
 
 customTouchSwitch.nodeLimits = {0, -1}
 customTouchSwitch.nodeLineRenderType = "line"
