@@ -387,11 +387,7 @@ namespace vitmod {
                     trigger.OnEnter(player);
                 }
             } else if (triggers.Count > 0) {
-                if (VitModule.Settings.TriggerTriggerRandomizationType == RandomizationTypes.FileTimer) {
-                    Calc.PushRandom((int)(SaveData.Instance.Time % int.MaxValue));
-                } else {
-                    Calc.PushRandom((int)(SceneAs<Level>().Session.Time % int.MaxValue));
-                }
+                Calc.PushRandom(VitModule.GetSeed(SceneAs<Level>()));
                 chosenTrigger = Calc.Choose(Calc.Random, triggers);
                 Calc.PopRandom();
 
@@ -633,10 +629,6 @@ namespace vitmod {
             OnInput,
             OnGrounded,
             OnPlayerState,
-        };
-        public enum RandomizationTypes {
-            FileTimer,
-            ChapterTimer
         };
         public enum InputTypes {
             Left,
