@@ -49,6 +49,7 @@ namespace vitmod
             oneUse = data.Bool("oneUse", false);
             preventCrash = data.Bool("preventCrash", true);
             useTime = data.Float("respawnTime", 0.2f);
+            resetSpeed = data.Bool("resetSpeed", true);
 
             Collider = new Hitbox(16f, 16f, -8f, -8f);
             Add(new PlayerCollider(new Action<Player>(OnPlayer), null, null));
@@ -150,13 +151,16 @@ namespace vitmod
             {
                 player.MoveVExact(-2);
             }
-            if (dirVector.X != 0)
+            if (resetSpeed)
             {
-                player.Speed.X = 0;
-            }
-            else
-            {
-                player.Speed.Y = 0;
+                if (dirVector.X != 0)
+                {
+                    player.Speed.X = 0;
+                }
+                else
+                {
+                    player.Speed.Y = 0;
+                }
             }
             player.StateMachine.State = 0;
             Audio.Play("event:/game/general/diamond_touch", Position);
@@ -197,6 +201,8 @@ namespace vitmod
         private bool preventCrash;
 
         private float useTime;
+
+        private bool resetSpeed;
 
         private Vector2 dirVector;
 

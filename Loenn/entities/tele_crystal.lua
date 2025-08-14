@@ -28,7 +28,8 @@ for i, dir in ipairs(directions) do
             direction = dir,
             oneUse = false,
             preventCrash = true,
-            respawnTime = 0.2
+            respawnTime = 0.2,
+            resetSpeed = true,
         }
     }
 end

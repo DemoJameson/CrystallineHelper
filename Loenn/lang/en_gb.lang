@@ -130,6 +130,7 @@ entities.vitellary/goodtelecrystal.attributes.description.direction=The directio
 entities.vitellary/goodtelecrystal.attributes.description.oneUse=Whether the refill should respawn after being used.
 entities.vitellary/goodtelecrystal.attributes.description.preventCrash=If false, the crystal will attempt to move you as far as possible until you collide with a wall, which will crash the game if it never does collide with a wall.
 entities.vitellary/goodtelecrystal.attributes.description.respawnTime=How long (in seconds) after using the crystal for it to respawn.
+entities.vitellary/goodtelecrystal.attributes.description.resetSpeed=Whether the crystal should reset the player's speed along the teleported axis.
 
 # Star Crystal
 entities.vitellary/starcrystal.attributes.description.oneUse=Whether the refill should respawn after being used.
