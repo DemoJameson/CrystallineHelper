@@ -220,6 +220,7 @@ placements.triggers.vitellary/customwindtrigger.tooltips.loop=Whether the wind s
 placements.triggers.vitellary/customwindtrigger.tooltips.persist=If true, the wind created will stay after transitioning to a different room or dying. It will still be replaced by other wind triggers.
 placements.triggers.vitellary/customwindtrigger.tooltips.oneUse=Whether the wind trigger should disappear after being used.
 placements.triggers.vitellary/customwindtrigger.tooltips.onRoomEnter=Whether the wind trigger should activate immediately when the player enters its room, regardless of the player position.
+placements.triggers.vitellary/customwindtrigger.tooltips.fixUpdateDepth=Whether the wind should always update before the player. If unchecked, whether it updates before or after the player is able to change depending on load order, resulting in inconsistent behavior.
 
 # Player Timestop Trigger
 placements.triggers.vitellary/nomovetrigger.tooltips.stopLength=Determines how long the player will be frozen for.

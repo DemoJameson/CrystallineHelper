@@ -35,7 +35,8 @@ customWindTrigger.placements = {
             loop = true,
             persist = false,
             oneUse = false,
-            onRoomEnter = false
+            onRoomEnter = false,
+            fixUpdateDepth = true
         }
     }
 }
