@@ -1,6 +1,6 @@
 local activationTypes = {
     "",
-    "Seed",
+    "Seeds",
     "Strawberry",
     "Keyberry",
     "Locked Door",
