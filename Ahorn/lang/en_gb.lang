@@ -212,7 +212,7 @@ placements.triggers.vitellary/resetdoortrigger.tooltips.onlyInRoom=Whether the t
 
 # Custom Wind Trigger
 placements.triggers.vitellary/customwindtrigger.tooltips.speedX=The horizontal speed of the wind. Can be a list of speeds, separated by commas. For reference, normal wind speed is 4, and strong is 8.
-placements.triggers.vitellary/customwindtrigger.tooltips.speedY=The vertical speed of the wind. Can be a list of speeds, separated by commas. For reference, normal wind speed is 4, and strong is 8.
+placements.triggers.vitellary/customwindtrigger.tooltips.speedY=The vertical speed of the wind. Can be a list of speeds, separated by commas. For reference, normal down wind speed is 3, and up is -4.
 placements.triggers.vitellary/customwindtrigger.tooltips.alternationSpeed=The time, in seconds, that it takes to switch between speeds if there is a list in either horizontal or vertical speed. Can also be a list of speeds, separated by commas, which will be looped through.
 placements.triggers.vitellary/customwindtrigger.tooltips.catchupSpeed=How fast the wind changes from the previous value. Default is 1.
 placements.triggers.vitellary/customwindtrigger.tooltips.activationType=Special condition for the wind to activate.
