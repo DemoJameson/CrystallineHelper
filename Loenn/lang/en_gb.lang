@@ -213,6 +213,7 @@ entities.vitellary/custompuffer.attributes.description.tangible=Controls if the 
 entities.vitellary/energybooster.attributes.description.behaveLikeDash=Whether the speed resets after the initial boost unless dashing down diagonal.
 entities.vitellary/energybooster.attributes.description.redirectSpeed=Stores your total speed regardless of direction and sends you out exactly that fast in the direction you boost.
 entities.vitellary/energybooster.attributes.description.oneUse=Whether the booster can only be used once.
+entities.vitellary/energybooster.attributes.description.setLastBooster=Whether to correctly update the internal variable that keeps track of the last booster touched by the player.\nDisabling this can result in unintended behavior when used alongside other custom booster entities.
 
 # Paired Dash Switch
 entities.vitellary/paireddashswitch.attributes.description.flag=If specified, this flag will be set to true when the switch is pressed.

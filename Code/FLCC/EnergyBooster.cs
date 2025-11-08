@@ -30,6 +30,7 @@ namespace vitmod
 		private bool dashBehavior;
 		private bool redirectSpeed;
 		private bool oneUse;
+		private bool setLastBooster;
 
 		public Vector2 PlayerSpeed;
 
@@ -44,6 +45,7 @@ namespace vitmod
 			dashBehavior = data.Bool("behaveLikeDash");
 			redirectSpeed = data.Bool("redirectSpeed");
 			oneUse = data.Bool("oneUse");
+			setLastBooster = data.Bool("setLastBooster", false);
 
 			Depth = -8500;
 			Collider = new Circle(10f, 0f, 2f);
@@ -102,6 +104,8 @@ namespace vitmod
 			{
 				cannotUseTimer = 0.45f;
 				player.boostRed = false;
+				if (setLastBooster)
+					player.LastBooster = player.CurrentBooster = null;
 				player.StateMachine.State = 4;
 				PlayerSpeed = player.Speed;
 				if (player.LiftSpeed != Vector2.Zero)

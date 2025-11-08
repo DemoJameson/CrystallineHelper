@@ -2,7 +2,7 @@ module FlushelineEnergyBooster
 
 using ..Ahorn, Maple
 
-@mapdef Entity "vitellary/energybooster" EnergyBooster(x::Integer, y::Integer, behaveLikeDash::Bool=false, redirectSpeed::Bool=false, oneUse::Bool=false)
+@mapdef Entity "vitellary/energybooster" EnergyBooster(x::Integer, y::Integer, behaveLikeDash::Bool=false, redirectSpeed::Bool=false, oneUse::Bool=false, setLastBooster::Bool=true)
 
 const placements = Ahorn.PlacementDict(
     "Energy Booster (Crystalline)" => Ahorn.EntityPlacement(
