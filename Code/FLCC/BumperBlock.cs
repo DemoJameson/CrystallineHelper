@@ -93,11 +93,11 @@ namespace vitmod
             activeByNormalCollision = data.Bool("activeByNormalCollision");
             if (activeByNormalCollision)
             {
-                OnCollide += OnCollideWitPlayer;
+                OnCollide += OnCollideWithPlayer;
             }
         }
 
-        private void OnCollideWitPlayer(Vector2 dir)
+        private void OnCollideWithPlayer(Vector2 dir)
         {
             Player player = Scene.Tracker.GetEntity<Player>();
             if (player != null && canActivate)
