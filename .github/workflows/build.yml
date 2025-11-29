@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: bin
-        path: Code/bin/Debug/net452
+        path: Code/bin/Debug/net8.0
