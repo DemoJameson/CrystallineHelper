@@ -40,8 +40,9 @@ jobs:
         name: CrystallineHelper
         path: |
           Ahorn
+          Audio
           Code/bin
+          !Code/bin/Debug
           Graphics
           Loenn
           everest.yaml
-          !Code/bin/Debug
