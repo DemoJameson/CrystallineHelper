@@ -298,6 +298,7 @@ entities.vitellary/flagkevin.attributes.description.returnSpeed=The speed at whi
 
 # Bumper Block
 entities.vitellary/bumperblock.attributes.description.axes=Directions you can dash into to hit the block.
+entities.vitellary/bumperblock.attributes.description.activeByNormalCollision=Block can be activated by normal collisions, not just dashes.
 
 # SMW Checkpoint
 entities.vitellary/smwcheckpoint.attributes.description.fullHeight=Whether the hitbox to touch the checkpoint is the full height of the poles, or just the bar.
