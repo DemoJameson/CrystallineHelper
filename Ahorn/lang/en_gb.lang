@@ -93,6 +93,7 @@ placements.entities.vitellary/custompuffer.tooltips.tangible=Controls if the puf
 placements.entities.vitellary/energybooster.tooltips.behaveLikeDash=Whether the speed resets after the initial boost unless dashing down diagonal.
 placements.entities.vitellary/energybooster.tooltips.redirectSpeed=Stores your total speed regardless of direction and sends you out exactly that fast in the direction you boost.
 placements.entities.vitellary/energybooster.tooltips.oneUse=Whether the booster can only be used once.
+placements.entities.vitellary/energybooster.tooltips.setLastBooster=Whether to correctly update the internal variable that keeps track of the last booster touched by the player.\nDisabling this can result in unintended behavior when used alongside other custom booster entities.
 
 # Paired Dash Switch
 placements.entities.vitellary/paireddashswitch.tooltips.flag=If specified, this flag will be set to true when the switch is pressed.
