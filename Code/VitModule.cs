@@ -61,7 +61,8 @@ namespace vitmod
                 set;
             } = RandomizationTypes.FileTimer;
 
-            public bool DisplayDashSequence {
+            public bool DisplayDashSequence
+            {
                 get;
                 set;
             } = false;
@@ -248,7 +249,8 @@ namespace vitmod
             BoostBumper.P_Idle = new ParticleType(Bumper.P_Ambience);
         }
 
-        public override void Initialize() {
+        public override void Initialize()
+        {
             base.Initialize();
             TriggerBeam.Initialize();
         }
@@ -326,7 +328,7 @@ namespace vitmod
 
         private static void HookedKeyIceInit()
         {
-            hookedKeyIceCtor = new Hook(typeof(FrostHelper.KeyIce).GetConstructor(new Type[]{typeof(EntityData), typeof(Vector2), typeof(EntityID), typeof(Vector2[])}), typeof(ResetDoorTrigger).GetMethod("KeyIce_ctor", BindingFlags.NonPublic | BindingFlags.Static));
+            hookedKeyIceCtor = new Hook(typeof(FrostHelper.KeyIce).GetConstructor(new Type[] { typeof(EntityData), typeof(Vector2), typeof(EntityID), typeof(Vector2[]) }), typeof(ResetDoorTrigger).GetMethod("KeyIce_ctor", BindingFlags.NonPublic | BindingFlags.Static));
             hookedKeyIceUpdate = new Hook(typeof(FrostHelper.KeyIce).GetMethod("Update"), typeof(ResetDoorTrigger).GetMethod("KeyIce_Update", BindingFlags.NonPublic | BindingFlags.Static));
             hookedKeyIceDissolveRoutine = new Hook(typeof(FrostHelper.KeyIce).GetMethod("DissolveRoutine", BindingFlags.NonPublic | BindingFlags.Instance), typeof(ResetDoorTrigger).GetMethod("KeyIce_DissolveRoutine", BindingFlags.NonPublic | BindingFlags.Static));
         }
@@ -376,6 +378,17 @@ namespace vitmod
                         }
                     }
                 }
+            }
+
+            if (TimeCrystal.stopStage <= 1)
+            {
+                self.Session.SetCounter("Crystalline_TimeCrystal_StopTimer", (int)TimeCrystal.stopTimer);
+                self.Session.SetSlider("Crystalline_TimeCrystal_StopTimer", TimeCrystal.stopTimer);
+            }
+            else
+            {
+                self.Session.SetCounter("Crystalline_TimeCrystal_StopTimer", 0);
+                self.Session.SetSlider("Crystalline_TimeCrystal_StopTimer", 0f);
             }
 
             if (TimeCrystal.stopStage > 0)
@@ -462,10 +475,11 @@ namespace vitmod
                 useNoMoveDelta = false;
             }
             self.Session.SetFlag(TimeFrozenFlag, TimeCrystal.stopStage == 1);
-			orig(self);
+            orig(self);
         }
 
-        private void EntityList_Update(ILContext il) {
+        private void EntityList_Update(ILContext il)
+        {
             var cursor = new ILCursor(il);
 
             int locEntity = 0;
@@ -480,14 +494,16 @@ namespace vitmod
 
                     cursor.Emit(OpCodes.Ldarg_0);
                     cursor.Emit(OpCodes.Ldloc, locEntity);
-                    cursor.EmitDelegate<Action<EntityList, Entity>>((self, entity) => {
+                    cursor.EmitDelegate<Action<EntityList, Entity>>((self, entity) =>
+                    {
                         lastDeltaTime = Engine.DeltaTime;
                         lastRawDeltaTime = Engine.RawDeltaTime;
 
                         var timeStopCheck = useTimeStopDelta && !(entity is Player || entity is PlayerDeadBody
                             || entity is TimeCrystal || entity is CrystalStaticSpinner || entity is DustStaticSpinner
                             || entity is Lookout || entity is FakeWall || entity is GameplayStats);
-                        if (frostHelperLoaded) {
+                        if (frostHelperLoaded)
+                        {
                             timeStopCheck = timeStopCheck && !IsFrostHelperSpinner(entity);
                         }
                         if (vivHelperLoaded)
@@ -496,10 +512,14 @@ namespace vitmod
                         }
                         var noMoveCheck = useNoMoveDelta && entity is Player;
 
-                        if (entity.Scene is Level) {
-                            if (noMoveCheck) {
+                        if (entity.Scene is Level)
+                        {
+                            if (noMoveCheck)
+                            {
                                 deltaTimeInfo.SetValue(null, noMoveDelta);
-                            } else if (timeStopCheck) {
+                            }
+                            else if (timeStopCheck)
+                            {
                                 if (!TimeCrystal.entitiesToIgnore.Contains(entity.GetType().FullName) &&
                                     !TimeCrystal.entitiesToIgnore.Contains(entity.GetType().Name) &&
                                     !(timeStopDelta < 0f && entity is ParticleSystem))
@@ -530,11 +550,14 @@ namespace vitmod
 
                     cursor.GotoLabel(labelEnd, MoveType.Before);
 
-                    cursor.EmitDelegate<Action>(() => {
-                        if (Engine.DeltaTime != lastDeltaTime) {
+                    cursor.EmitDelegate<Action>(() =>
+                    {
+                        if (Engine.DeltaTime != lastDeltaTime)
+                        {
                             deltaTimeInfo.SetValue(null, lastDeltaTime);
                         }
-                        if (Engine.RawDeltaTime != lastRawDeltaTime) {
+                        if (Engine.RawDeltaTime != lastRawDeltaTime)
+                        {
                             rawDeltaTimeInfo.SetValue(null, lastRawDeltaTime);
                         }
                     });
@@ -542,7 +565,8 @@ namespace vitmod
             }
         }
 
-        private void RendererList_Update(ILContext il) {
+        private void RendererList_Update(ILContext il)
+        {
             var cursor = new ILCursor(il);
 
             if (cursor.TryGotoNext(MoveType.Before,
@@ -552,9 +576,11 @@ namespace vitmod
             {
                 Logger.Log("CrystallineHelper", "Adding RendererList.Update hook");
 
-                cursor.EmitDelegate<Func<Renderer, Renderer>>((renderer) => {
+                cursor.EmitDelegate<Func<Renderer, Renderer>>((renderer) =>
+                {
                     lastDeltaTime = Engine.DeltaTime;
-                    if (useTimeStopDelta && !(renderer is DisplacementRenderer)) {
+                    if (useTimeStopDelta && !(renderer is DisplacementRenderer))
+                    {
                         deltaTimeInfo.SetValue(null, timeStopDelta);
                     }
                     return renderer;
@@ -562,8 +588,10 @@ namespace vitmod
 
                 cursor.Index += 3;
 
-                cursor.EmitDelegate<Action>(() => {
-                    if (Engine.DeltaTime != lastDeltaTime) {
+                cursor.EmitDelegate<Action>(() =>
+                {
+                    if (Engine.DeltaTime != lastDeltaTime)
+                    {
                         deltaTimeInfo.SetValue(null, lastDeltaTime);
                     }
                 });
@@ -651,7 +679,8 @@ namespace vitmod
             }
 
             // coyote bounce trigger;
-            if (CoyoteBounceTrigger.GroundedOverride && self.jumpGraceTimer <= 0f) {
+            if (CoyoteBounceTrigger.GroundedOverride && self.jumpGraceTimer <= 0f)
+            {
                 CoyoteBounceTrigger.GroundedOverride = false;
             }
         }
@@ -838,15 +867,20 @@ namespace vitmod
             On.Celeste.Level.Reload -= Level_Reload;
         }
 
-        public static int GetSeed(Level level) {
-            if (Settings.RandomizationType == RandomizationTypes.FileTimer) {
+        public static int GetSeed(Level level)
+        {
+            if (Settings.RandomizationType == RandomizationTypes.FileTimer)
+            {
                 return (int)(SaveData.Instance.Time % int.MaxValue);
-            } else {
+            }
+            else
+            {
                 return (int)(level.Session.Time % int.MaxValue);
             }
         }
 
-        public enum RandomizationTypes {
+        public enum RandomizationTypes
+        {
             FileTimer,
             ChapterTimer
         };
