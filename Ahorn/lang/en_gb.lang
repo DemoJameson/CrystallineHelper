@@ -93,6 +93,7 @@ placements.entities.vitellary/custompuffer.tooltips.tangible=Controls if the puf
 placements.entities.vitellary/energybooster.tooltips.behaveLikeDash=Whether the speed resets after the initial boost unless dashing down diagonal.
 placements.entities.vitellary/energybooster.tooltips.redirectSpeed=Stores your total speed regardless of direction and sends you out exactly that fast in the direction you boost.
 placements.entities.vitellary/energybooster.tooltips.oneUse=Whether the booster can only be used once.
+placements.entities.vitellary/energybooster.tooltips.setLastBooster=Whether to correctly update the internal variable that keeps track of the last booster touched by the player.\nDisabling this can result in unintended behavior when used alongside other custom booster entities.
 
 # Paired Dash Switch
 placements.entities.vitellary/paireddashswitch.tooltips.flag=If specified, this flag will be set to true when the switch is pressed.
@@ -212,7 +213,7 @@ placements.triggers.vitellary/resetdoortrigger.tooltips.onlyInRoom=Whether the t
 
 # Custom Wind Trigger
 placements.triggers.vitellary/customwindtrigger.tooltips.speedX=The horizontal speed of the wind. Can be a list of speeds, separated by commas. For reference, normal wind speed is 4, and strong is 8.
-placements.triggers.vitellary/customwindtrigger.tooltips.speedY=The vertical speed of the wind. Can be a list of speeds, separated by commas. For reference, normal wind speed is 4, and strong is 8.
+placements.triggers.vitellary/customwindtrigger.tooltips.speedY=The vertical speed of the wind. Can be a list of speeds, separated by commas. For reference, normal down wind speed is 3, and up is -4.
 placements.triggers.vitellary/customwindtrigger.tooltips.alternationSpeed=The time, in seconds, that it takes to switch between speeds if there is a list in either horizontal or vertical speed. Can also be a list of speeds, separated by commas, which will be looped through.
 placements.triggers.vitellary/customwindtrigger.tooltips.catchupSpeed=How fast the wind changes from the previous value. Default is 1.
 placements.triggers.vitellary/customwindtrigger.tooltips.activationType=Special condition for the wind to activate.
@@ -220,6 +221,7 @@ placements.triggers.vitellary/customwindtrigger.tooltips.loop=Whether the wind s
 placements.triggers.vitellary/customwindtrigger.tooltips.persist=If true, the wind created will stay after transitioning to a different room or dying. It will still be replaced by other wind triggers.
 placements.triggers.vitellary/customwindtrigger.tooltips.oneUse=Whether the wind trigger should disappear after being used.
 placements.triggers.vitellary/customwindtrigger.tooltips.onRoomEnter=Whether the wind trigger should activate immediately when the player enters its room, regardless of the player position.
+placements.triggers.vitellary/customwindtrigger.tooltips.fixUpdateDepth=Whether the wind should always update before the player. If unchecked, whether it updates before or after the player is able to change depending on load order, resulting in inconsistent behavior.
 
 # Player Timestop Trigger
 placements.triggers.vitellary/nomovetrigger.tooltips.stopLength=Determines how long the player will be frozen for.

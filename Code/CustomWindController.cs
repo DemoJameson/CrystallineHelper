@@ -31,7 +31,7 @@ namespace vitmod
             On.Celeste.TheoCrystal.OnPickup -= TheoCrystal_OnPickup;
         }
 
-        public CustomWindController(List<float> speedX, List<float> speedY, List<float> alternateSpeed, float catchupSpeed, string activateType, bool loop, bool persist)
+        public CustomWindController(List<float> speedX, List<float> speedY, List<float> alternateSpeed, float catchupSpeed, string activateType, bool loop, bool persist, bool fixUpdateDepth)
         {
             active = false;
             Tag = Tags.TransitionUpdate;
@@ -42,9 +42,10 @@ namespace vitmod
             this.activateType = activateType;
             this.loop = loop;
             if (persist)
-            {
                 Tag |= Tags.Global | Tags.Persistent;
-            }
+
+            if (fixUpdateDepth)
+                Depth = 1;
         }
 
         public override void Update()
@@ -240,7 +241,7 @@ namespace vitmod
 
         public void DeactivateWind()
         {
-            if (!active) { return; }
+            if (!active) return;
             active = false;
             if (coroutine != null)
             {

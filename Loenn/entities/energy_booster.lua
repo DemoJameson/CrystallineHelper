@@ -11,6 +11,7 @@ energyBooster.placements = {
             behaveLikeDash = false,
             redirectSpeed = false,
             oneUse = false,
+            setLastBooster = true,
         },
     },
     {
@@ -19,8 +20,14 @@ energyBooster.placements = {
             behaveLikeDash = false,
             redirectSpeed = true,
             oneUse = false,
+            setLastBooster = true,
         },
     },
+}
+
+energyBooster.fieldOrder = {
+    "x", "y",
+    "redirectSpeed", "behaveLikeDash", "oneUse", "setLastBooster",
 }
 
 function energyBooster.sprite(room, entity)

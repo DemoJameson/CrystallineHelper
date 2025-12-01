@@ -28,6 +28,7 @@ for _, axis in pairs(axesOptions) do
             width = 24,
             height = 24,
             axes = axis,
+            activeByNormalCollision = false
         }
     })
 end

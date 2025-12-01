@@ -1,6 +1,6 @@
 local activationTypes = {
     "",
-    "Seed",
+    "Seeds",
     "Strawberry",
     "Keyberry",
     "Locked Door",
@@ -35,7 +35,8 @@ customWindTrigger.placements = {
             loop = true,
             persist = false,
             oneUse = false,
-            onRoomEnter = false
+            onRoomEnter = false,
+            fixUpdateDepth = true
         }
     }
 }

@@ -214,6 +214,7 @@ entities.vitellary/custompuffer.attributes.description.tangible=Controls if the 
 entities.vitellary/energybooster.attributes.description.behaveLikeDash=Whether the speed resets after the initial boost unless dashing down diagonal.
 entities.vitellary/energybooster.attributes.description.redirectSpeed=Stores your total speed regardless of direction and sends you out exactly that fast in the direction you boost.
 entities.vitellary/energybooster.attributes.description.oneUse=Whether the booster can only be used once.
+entities.vitellary/energybooster.attributes.description.setLastBooster=Whether to correctly update the internal variable that keeps track of the last booster touched by the player.\nDisabling this can result in unintended behavior when used alongside other custom booster entities.
 
 # Paired Dash Switch
 entities.vitellary/paireddashswitch.attributes.description.flag=If specified, this flag will be set to true when the switch is pressed.
@@ -297,6 +298,7 @@ entities.vitellary/flagkevin.attributes.description.returnSpeed=The speed at whi
 
 # Bumper Block
 entities.vitellary/bumperblock.attributes.description.axes=Directions you can dash into to hit the block.
+entities.vitellary/bumperblock.attributes.description.activeByNormalCollision=Block can be activated by normal collisions, not just dashes.
 
 # SMW Checkpoint
 entities.vitellary/smwcheckpoint.attributes.description.fullHeight=Whether the hitbox to touch the checkpoint is the full height of the poles, or just the bar.
@@ -342,7 +344,7 @@ entities.vitellary/dashcodecontroller.attributes.description.index=This sequence
 
 # Custom Wind Trigger
 triggers.vitellary/customwindtrigger.attributes.description.speedX=The horizontal speed of the wind. Can be a list of speeds, separated by commas. For reference, normal wind speed is 4, and strong is 8.
-triggers.vitellary/customwindtrigger.attributes.description.speedY=The vertical speed of the wind. Can be a list of speeds, separated by commas. For reference, normal wind speed is 4, and strong is 8.
+triggers.vitellary/customwindtrigger.attributes.description.speedY=The vertical speed of the wind. Can be a list of speeds, separated by commas. For reference, normal down wind speed is 3, and up is -4.
 triggers.vitellary/customwindtrigger.attributes.description.alternationSpeed=The time, in seconds, that it takes to switch between speeds if there is a list in either horizontal or vertical speed. Can also be a list of speeds, separated by commas, which will be looped through.
 triggers.vitellary/customwindtrigger.attributes.description.catchupSpeed=How fast the wind changes from the previous value. Default is 1.
 triggers.vitellary/customwindtrigger.attributes.description.activationType=Special condition for the wind to activate.
@@ -350,6 +352,7 @@ triggers.vitellary/customwindtrigger.attributes.description.loop=Whether the win
 triggers.vitellary/customwindtrigger.attributes.description.persist=If true, the wind created will stay after transitioning to a different room or dying. It will still be replaced by other wind triggers.
 triggers.vitellary/customwindtrigger.attributes.description.oneUse=Whether the wind trigger should disappear after being used.
 triggers.vitellary/customwindtrigger.attributes.description.onRoomEnter=Whether the wind trigger should activate immediately when the player enters its room, regardless of the player position.
+triggers.vitellary/customwindtrigger.attributes.description.fixUpdateDepth=Whether the wind should always update before the player. If unchecked, whether it updates before or after the player is able to change depending on load order, resulting in inconsistent behavior.
 
 # Custom Wind Snow
 effects.CrystallineHelper/CustomWindSnow.attributes.description.colors=List of possible colors the wind particles can have, separated by commas.

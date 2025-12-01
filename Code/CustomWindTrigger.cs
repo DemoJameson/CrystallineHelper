@@ -18,7 +18,7 @@ namespace vitmod
         {
             speedX = new List<float>();
             string[] speedXStrings = data.Attr("speedX", "0").Split(',');
-            foreach(string sx in speedXStrings)
+            foreach (string sx in speedXStrings)
             {
                 speedX.Add(float.Parse(sx));
             }
@@ -30,7 +30,7 @@ namespace vitmod
             }
             alternateSpeed = new List<float>();
             string[] alternateSpeedStrings = data.Attr("alternationSpeed", "0").Split(',');
-            foreach(string sa in alternateSpeedStrings)
+            foreach (string sa in alternateSpeedStrings)
             {
                 alternateSpeed.Add(float.Parse(sa));
             }
@@ -41,6 +41,7 @@ namespace vitmod
             oneUse = data.Bool("oneUse", false);
             ID = data.ID;
             onRoomEnter = data.Bool("onRoomEnter", false);
+            fixUpdateDepth = data.Bool("fixUpdateDepth", false);
         }
 
         public override void Awake(Scene scene)
@@ -65,7 +66,7 @@ namespace vitmod
             {
                 customWind.RemoveSelf();
             }
-            customWind = new CustomWindController(speedX, speedY, alternateSpeed, catchupSpeed, activateType, loop, persist);
+            customWind = new CustomWindController(speedX, speedY, alternateSpeed, catchupSpeed, activateType, loop, persist, fixUpdateDepth);
             Scene.Add(customWind);
             if (oneUse)
             {
@@ -97,5 +98,7 @@ namespace vitmod
         private int ID;
 
         private bool onRoomEnter;
+
+        private bool fixUpdateDepth;
     }
 }
