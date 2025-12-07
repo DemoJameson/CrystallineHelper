@@ -55,7 +55,7 @@ namespace vitmod
         {
             base.Update(scene);
             Level level = scene as Level;
-            visibleFade = Calc.Approach(visibleFade, IsVisible(level) ? 1f : 0f, Engine.DeltaTime * 2f);
+            visibleFade = Calc.Approach(visibleFade, IsVisible(level) ? 1f : 0f, Engine.DeltaTime * 2f); 
             foreach(SineWave sine in sines)
             {
                 sine.Update();
@@ -84,10 +84,14 @@ namespace vitmod
                 }
             }
             rotation = Calc.Approach(rotation, target_rot, Engine.DeltaTime * 8f);
+            if (windVector.X == 0f)
+            {
+                windVector.Y *= 3f;
+            }
             for (int i = 0; i < positions.Length; i++)
             {
                 float value = sines[i % sines.Length].Value;
-                Vector2 zero = new Vector2(windVector.X + value * 10f, windVector.Y * 3f + value * 10f);
+                Vector2 zero = new Vector2(windVector.X + value * 10f, windVector.Y + value * 10f);
                 if (windVector.Length() == 0f)
                 {
                     zero.Y += 20f;
@@ -125,14 +129,20 @@ namespace vitmod
                     position.Y += 360f;
                 }
                 position.X -= (scene as Level).Camera.X + CameraOffset.X;
-                position.X %= 360f;
+                position.X %= 640f;
                 if (position.X < 0f)
                 {
-                    position.X += 360f;
+                    position.X += 640f;
                 }
                 if (index < amount * limit)
                 {
-                    GFX.Game["particles/snow"].DrawCentered(position, color, scale, rotation);
+                    for (int draw_y = 0; draw_y < (scene as Level).Camera.Viewport.Height; draw_y += 360)
+                    {
+                        for (int draw_x = 0; draw_x < (scene as Level).Camera.Viewport.Width; draw_x += 640)
+                        {
+                            GFX.Game["particles/snow"].DrawCentered(position + new Vector2(draw_x, draw_y), color, scale, rotation);
+                        }
+                    }
                 }
                 index++;
             }
