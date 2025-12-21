@@ -16,6 +16,7 @@ namespace vitmod {
         public static void Load() {
             On.Celeste.Level.LoadLevel += Level_LoadLevel;
             On.Celeste.Player.Jump += Player_Jump;
+            On.Celeste.Player.WallJump += Player_WallJump;
             On.Celeste.PlayerCollider.Check += PlayerCollider_Check;
             IL.Monocle.Engine.Update += Engine_Update;
         }
@@ -23,6 +24,7 @@ namespace vitmod {
         public static void Unload() {
             On.Celeste.Level.LoadLevel -= Level_LoadLevel;
             On.Celeste.Player.Jump -= Player_Jump;
+            On.Celeste.Player.WallJump -= Player_WallJump;
             On.Celeste.PlayerCollider.Check -= PlayerCollider_Check;
             IL.Monocle.Engine.Update -= Engine_Update;
         }
@@ -73,6 +75,8 @@ namespace vitmod {
             excludeTalkers = data.Bool("excludeTalkers", false);
             ifSafe = data.Bool("onlyIfSafe", false);
             includeCoyote = data.Bool("includeCoyote", false);
+            includeWalljump = data.Bool("includeWallJump", false);
+            resetAfterJump = data.Bool("resetAfterJump", false);
             playerState = data.Int("playerState", 0);
             if (string.IsNullOrEmpty(data.Attr("entityType", ""))) {
                 collideType = data.Attr("entityTypeToCollide", "Celeste.Strawberry");
@@ -501,7 +505,35 @@ namespace vitmod {
             foreach (TriggerTrigger trigger in self.SceneAs<Level>().Tracker.GetEntities<TriggerTrigger>()) {
                 if (trigger.activationType == ActivationTypes.Jumping) {
                     trigger.externalActivation = true;
-                    self.Add(new Coroutine(trigger.JumpRoutine(self, trigger), true));
+                    if (trigger.resetAfterJump)
+                    {
+                        trigger.resetActivation = true;
+                    }
+                    else
+                    {
+                        self.Add(new Coroutine(trigger.JumpRoutine(self, trigger), true));
+                    }
+                }
+            }
+        }
+
+        private static void Player_WallJump(On.Celeste.Player.orig_WallJump orig, Player self, int dir)
+        {
+            orig(self, dir);
+            if (self == null) { return; }
+            foreach (TriggerTrigger trigger in self.SceneAs<Level>().Tracker.GetEntities<TriggerTrigger>())
+            {
+                if (trigger.activationType == ActivationTypes.Jumping && trigger.includeWalljump)
+                {
+                    trigger.externalActivation = true;
+                    if (trigger.resetAfterJump)
+                    {
+                        trigger.resetActivation = true;
+                    }
+                    else
+                    {
+                        self.Add(new Coroutine(trigger.JumpRoutine(self, trigger), true));
+                    }
                 }
             }
         }
@@ -589,6 +621,8 @@ namespace vitmod {
         private bool excludeTalkers;
         private bool ifSafe;
         private bool includeCoyote;
+        public bool includeWalljump;
+        public bool resetAfterJump;
         private int playerState;
         private TalkComponent talker;
         private List<Entity> entitiesInside;

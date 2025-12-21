@@ -94,7 +94,9 @@ function triggerTrigger.ignoredFields(entity)
         "excludeTalkers",
         "onlyIfSafe",
         "playerState",
-        "includeCoyote"
+        "includeCoyote",
+        "includeWallJump",
+        "resetAfterJump",
     }
 
     local function doNotIgnore(value)
@@ -145,6 +147,9 @@ function triggerTrigger.ignoredFields(entity)
     elseif atype == "OnGrounded" then
         doNotIgnore("onlyIfSafe")
         doNotIgnore("includeCoyote")
+    elseif atype == "Jumping" then
+        doNotIgnore("includeWallJump")
+        doNotIgnore("resetAfterJump")
     elseif atype == "OnPlayerState" then
         doNotIgnore("playerState")
     end
@@ -190,6 +195,8 @@ for _, mode in pairs(activationTypes) do
             onlyIfSafe = false,
             playerState = 0,
             includeCoyote = false,
+            includeWallJump = true,
+            resetAfterJump = false,
         }
     }
     table.insert(triggerTrigger.placements, placement)
