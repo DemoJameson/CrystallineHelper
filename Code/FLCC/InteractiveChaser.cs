@@ -19,6 +19,8 @@ namespace vitmod
 	[Tracked]
 	[CustomEntity("vitellary/interactivechaser")]
 	public class InteractiveChaser : Entity {
+        internal static DetourConfig RootConfig = new("CrystallineHelper_InteractiveChaser", 0);
+
         private const string vitellaryInteractiveChaserStates = "vitellaryInteractiveChaserStates";
         private const string vitellaryChaserPosition = "vitellaryChaserPosition";
         private const string vitellaryChaserMovementCounter = "vitellaryChaserMovementCounter";
@@ -354,9 +356,12 @@ namespace vitmod
 
 		public static void Load()
 		{
-			On.Celeste.Player.ctor += Player_ctor;
-			On.Celeste.Player.Die += Player_Die;
-			On.Celeste.Player.Update += Player_Update;
+            using (new DetourConfigContext(RootConfig).Use())
+            {
+                On.Celeste.Player.Die += Player_Die;
+            }
+            On.Celeste.Player.ctor += Player_ctor;
+            On.Celeste.Player.Update += Player_Update;
 			//On.Celeste.Actor.Update += Actor_Update;
 			On.Celeste.Player.UpdateChaserStates += Player_UpdateChaserStates;
 			On.Celeste.Player.OnTransition += Player_OnTransition;
